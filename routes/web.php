@@ -23,7 +23,8 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     // Redirect to setup if not completed
-    if (!file_exists(storage_path('app/setup_completed'))) {
+    $setupStatePath = storage_path('app/setup_state.json');
+    if (!file_exists($setupStatePath)) {
         return redirect('/setup');
     }
     

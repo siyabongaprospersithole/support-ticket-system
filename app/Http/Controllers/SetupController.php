@@ -252,7 +252,24 @@ class SetupController extends Controller
             // Clear application cache
             Artisan::call('optimize:clear');
             
-            // Mark setup as completed
+            // Create setup state information
+            $setupState = [
+                'completed_at' => date('Y-m-d H:i:s'),
+                'database_configured' => true,
+                'migrations_run' => true,
+                'mail_configured' => true,
+                'version' => '1.0',
+                'php_version' => PHP_VERSION,
+                'environment' => app()->environment(),
+            ];
+            
+            // Save setup state
+            File::put(
+                storage_path('app/setup_state.json'),
+                json_encode($setupState, JSON_PRETTY_PRINT)
+            );
+            
+            // Create the completed file for backward compatibility
             File::put(storage_path('app/setup_completed'), date('Y-m-d H:i:s'));
             
             // Re-enable Vite HMR once setup is complete
