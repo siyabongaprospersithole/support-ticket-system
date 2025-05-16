@@ -181,7 +181,7 @@ const runMigrations = async () => {
     setupStore.setMigrationOutput('');
     
     try {
-        const response = await axios.post('/setup/run-migrations');
+        const response = await axios.post('/setup/run-migrations', { reset: true });
         setupStore.setMigrationOutput(response.data.output);
         
         if (response.data.success) {
@@ -192,6 +192,7 @@ const runMigrations = async () => {
         }
     } catch (e) {
         error.value = e.response?.data?.message || 'An error occurred while running migrations.';
+        setupStore.setMigrationOutput(e.response?.data?.output || '');
     } finally {
         loading.value = false;
     }
@@ -278,8 +279,45 @@ const getStepIconClasses = (step) => {
 };
 
 // Function to reset setup (for testing/debugging)
-const resetSetup = () => {
-    setupStore.resetState();
+const resetSetup = async () => {
+    loading.value = true;
+    error.value = null;
+    
+    try {
+        // Reset the database first
+        const response = await axios.post('/setup/run-migrations', { reset: true });
+        setupStore.setMigrationOutput(response.data.output || '');
+        
+        // Reset the store state
+        setupStore.resetState();
+        
+        // Reset forms to initial values
+        setupStore.updateDbForm({
+            connection: props.dbConfig.connection,
+            host: props.dbConfig.host,
+            port: props.dbConfig.port,
+            database: props.dbConfig.database,
+            username: props.dbConfig.username,
+            password: props.dbConfig.password
+        });
+        
+        setupStore.updateMailForm({
+            host: props.mailConfig.host,
+            port: props.mailConfig.port,
+            username: props.mailConfig.username,
+            password: props.mailConfig.password,
+            encryption: props.mailConfig.encryption,
+            from_address: props.mailConfig.from_address,
+            from_name: props.mailConfig.from_name
+        });
+        
+        // Show success message
+        error.value = null;
+    } catch (e) {
+        error.value = e.response?.data?.message || 'An error occurred while resetting the setup.';
+    } finally {
+        loading.value = false;
+    }
 };
 </script>
 
@@ -295,11 +333,11 @@ const resetSetup = () => {
                     <div class="setup-header-circle-2"></div>
                     <div class="setup-header-circle-3"></div>
                 </div>
-                <h1 class="text-3xl font-bold flex items-center">
-                    <i class="fas fa-ticket-alt mr-3"></i>
+                <h1 class="text-3xl font-bold flex items-center text-white">
+                    <i class="fas fa-ticket-alt mr-3 mt-1"></i>
                     Support Ticket System Setup
                 </h1>
-                <p class="mt-2 opacity-80 max-w-xl">
+                <p class="mt-2 text-indigo-100 opacity-90 max-w-xl">
                     Welcome to the installation wizard. Follow the steps below to set up your support ticket system.
                 </p>
             </div>

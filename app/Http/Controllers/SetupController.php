@@ -172,35 +172,95 @@ class SetupController extends Controller
     }
 
     /**
-     * Run database migrations
+     * Reset the database by dropping all tables and cleaning up
      */
-    public function runMigrations()
+    private function resetDatabase()
     {
         try {
-            DB::beginTransaction();
+            // Get the current database connection
+            $connection = DB::connection();
+            $database = $connection->getDatabaseName();
+
+            // Disable foreign key checks
+            $connection->statement('SET FOREIGN_KEY_CHECKS=0');
+
+            // Get all tables
+            $tables = $connection->select('SHOW TABLES');
+            $tableKey = "Tables_in_" . $database;
+
+            // Drop each table
+            foreach ($tables as $table) {
+                $tableName = $table->$tableKey;
+                $connection->statement("DROP TABLE IF EXISTS `$tableName`");
+            }
+
+            // Re-enable foreign key checks
+            $connection->statement('SET FOREIGN_KEY_CHECKS=1');
+
+            // Clear various caches
+            Artisan::call('cache:clear');
+            Artisan::call('config:clear');
+            Artisan::call('route:clear');
+            Artisan::call('view:clear');
+
+            // Remove setup completion markers
+            if (file_exists(storage_path('app/setup_completed'))) {
+                unlink(storage_path('app/setup_completed'));
+            }
+            if (file_exists(storage_path('app/setup_state.json'))) {
+                unlink(storage_path('app/setup_state.json'));
+            }
+
+            return true;
+        } catch (Exception $e) {
+            Log::error('Database reset failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return false;
+        }
+    }
+
+    /**
+     * Run database migrations
+     */
+    public function runMigrations(Request $request)
+    {
+        try {
+            // Check if reset was requested
+            if ($request->has('reset') && $request->reset === true) {
+                // Reset the database first
+                if (!$this->resetDatabase()) {
+                    throw new Exception('Failed to reset database');
+                }
+            }
             
             // Run migrations
+            $migrateOutput = Artisan::output();
             Artisan::call('migrate', ['--force' => true]);
             
             // Seed the database with initial data
+            $seedOutput = Artisan::output();
             Artisan::call('db:seed', ['--force' => true]);
             
-            DB::commit();
+            $finalOutput = $migrateOutput . "\n" . $seedOutput . "\n" . Artisan::output();
             
             return response()->json([
                 'success' => true, 
                 'message' => 'Migrations completed successfully!',
-                'output' => Artisan::output()
+                'output' => $finalOutput
             ]);
         } catch (Exception $e) {
-            DB::rollBack();
-            
             Log::error('Migration failed', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
             
-            return response()->json(['success' => false, 'message' => 'Migration failed: ' . $e->getMessage()], 422);
+            return response()->json([
+                'success' => false, 
+                'message' => 'Migration failed: ' . $e->getMessage(),
+                'output' => Artisan::output()
+            ], 422);
         }
     }
 

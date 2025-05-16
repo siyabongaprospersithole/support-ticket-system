@@ -5,10 +5,14 @@
     }
 
     .setup-container {
-        @apply max-w-4xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden;
+        width: 100%;
+        max-width: 56rem;
+        overflow: hidden;
+        @apply bg-white rounded-2xl shadow-2xl;
     }
 
-    .setup-header {
+    /* Header styles with increased specificity */
+    .setup-container .setup-header {
         @apply bg-gradient-to-r from-indigo-600 to-blue-500 px-6 py-8 text-white relative overflow-hidden;
     }
 
@@ -17,7 +21,14 @@
     }
 
     .setup-header-circle-1 {
-        @apply absolute left-5 top-10 w-12 h-12 bg-white rounded-full;
+        position: absolute;
+        left: 1.05rem;
+        top: 1.6rem;
+        height: 3rem;
+        width: 3rem;
+        border-radius: 9999px;
+        --tw-bg-opacity: 1;
+        background-color: rgb(255 255 255 / var(--tw-bg-opacity));
     }
 
     .setup-header-circle-2 {

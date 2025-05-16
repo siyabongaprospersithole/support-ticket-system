@@ -48,11 +48,11 @@ onMounted(() => {
                 </Link>
 
                 <template v-else>
-                    <a :href="route('login')" class="glass-button bg-white bg-opacity-10 hover:bg-opacity-20">
+                    <a :href="route('login')" class="glass-button bg-white bg-opacity-10 hover:bg-opacity-20 text-white">
                         Log in
                     </a>
 
-                    <a v-if="canRegister" :href="route('register')" class="ml-4 glass-button bg-indigo-500 hover:bg-indigo-600">
+                    <a v-if="canRegister" :href="route('register')" class="ml-4 glass-button bg-indigo-500 hover:bg-indigo-600 text-white">
                         Register
                     </a>
                 </template>
@@ -68,18 +68,18 @@ onMounted(() => {
                     </div>
 
                     <!-- Title and Subtitle -->
-                    <h1 class="landing-title">Support Ticket System</h1>
-                    <p class="landing-subtitle">A modern, efficient platform for managing support tickets and providing outstanding customer service.</p>
+                    <h1 class="text-4xl font-bold text-white mb-4">Support Ticket System</h1>
+                    <p class="text-lg text-indigo-200 text-center max-w-2xl mb-8">A modern, efficient platform for managing support tickets and providing outstanding customer service.</p>
 
                     <!-- Call to Action -->
                     <div class="flex flex-col sm:flex-row gap-4 mb-16">
                         <Link v-if="$page.props.auth.user" :href="route('dashboard')" class="glass-button bg-indigo-500 hover:bg-indigo-600">
                             <i class="fas fa-tachometer-alt mr-2"></i> Go to Dashboard
                         </Link>
-                        <Link v-else :href="route('register')" class="glass-button bg-indigo-500 hover:bg-indigo-600">
-                            <i class="fas fa-user-plus mr-2"></i> Create an Account
+                        <Link v-else :href="route('register')" class="glass-button bg-indigo-500 hover:bg-indigo-600 text-white">
+                            <i class="fas fa-user-plus mr-2 "></i> Create an Account
                         </Link>
-                        <Link :href="route('login')" class="glass-button bg-white bg-opacity-10 hover:bg-opacity-20">
+                        <Link :href="route('login')" class="glass-button bg-white bg-opacity-10 hover:bg-opacity-20 text-white">
                             <i class="fas fa-sign-in-alt mr-2"></i> Sign In
                         </Link>
                     </div>
@@ -147,28 +147,28 @@ onMounted(() => {
 
                     <!-- Tech Stack -->
                     <div class="tech-stack">
-                        <div class="text-center">
+                        <div class="text-center text-white">
                             <i class="fab fa-laravel tech-icon"></i>
-                            <p class="tech-label">Laravel {{ laravelVersion }}</p>
+                            <p class="tech-label text-white">Laravel {{ laravelVersion }}</p>
                         </div>
-                        <div class="text-center">
+                        <div class="text-cente">
                             <i class="fab fa-vuejs tech-icon"></i>
-                            <p class="tech-label">Vue.js 3</p>
+                            <p class="tech-label text-white">Vue.js 3</p>
                         </div>
-                        <div class="text-center">
-                            <i class="fab fa-php tech-icon"></i>
-                            <p class="tech-label">PHP {{ phpVersion }}</p>
+                        <div class="text-cente">
+                             <i class="fab fa-php tech-icon"></i>
+                            <p class="tech-label text-white">PHP {{ phpVersion }}</p>
                         </div>
                         <div class="text-center">
                             <i class="fab fa-npm tech-icon"></i>
-                            <p class="tech-label">Inertia.js</p>
+                            <p class="tech-label text-white">Inertia.js</p>
                         </div>
                     </div>
 
                     <!-- Footer -->
-                    <div class="landing-footer">
-                        <p>Support Ticket System &copy; {{ new Date().getFullYear() }}</p>
-                        <p class="mt-2">Made with <i class="fas fa-heart text-red-500"></i> by Team Swiffy</p>
+                    <div class="landing-footer ">
+                        <p class="text-white">Support Ticket System &copy; {{ new Date().getFullYear() }}</p>
+                        <p class="mt-2 text-white">Made with <i class="fas fa-heart text-red-500"></i> by Team Swiffy</p>
                     </div>
                 </div>
             </div>

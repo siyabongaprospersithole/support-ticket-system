@@ -1,5 +1,3 @@
-
-
 @import 'vue-select/dist/vue-select.css';
 
 /* Base styles */
@@ -16,6 +14,7 @@
 @import 'pages/tickets.css';
 @import 'pages/welcome.css';
 @import 'pages/activities.css';
+@import 'pages/setup.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
