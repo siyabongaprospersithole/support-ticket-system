@@ -1,0 +1,91 @@
+@layer base {
+    /* Headings */
+    h1 {
+        @apply text-3xl font-bold text-gray-900 sm:text-4xl;
+    }
+
+    h2 {
+        @apply text-2xl font-semibold text-gray-900 sm:text-3xl;
+    }
+
+    h3 {
+        @apply text-xl font-medium text-gray-900 sm:text-2xl;
+    }
+
+    h4 {
+        @apply text-lg font-medium text-gray-900;
+    }
+
+    /* Body text */
+    p {
+        @apply text-base text-gray-600 leading-relaxed;
+    }
+
+    /* Links */
+    a {
+        @apply text-primary-600 hover:text-primary-700 transition-colors duration-200;
+    }
+
+    /* Lists */
+    ul, ol {
+        @apply list-inside;
+    }
+
+    ul {
+        @apply list-disc;
+    }
+
+    ol {
+        @apply list-decimal;
+    }
+
+    /* Text utilities */
+    .text-small {
+        @apply text-sm text-gray-500;
+    }
+
+    .text-large {
+        @apply text-lg text-gray-900;
+    }
+
+    .text-muted {
+        @apply text-gray-500;
+    }
+
+    .text-success {
+        @apply text-green-600;
+    }
+
+    .text-warning {
+        @apply text-yellow-600;
+    }
+
+    .text-error {
+        @apply text-red-600;
+    }
+
+    .text-info {
+        @apply text-blue-600;
+    }
+
+    /* Line heights */
+    .leading-none {
+        line-height: 1;
+    }
+
+    .leading-tight {
+        line-height: 1.25;
+    }
+
+    .leading-normal {
+        line-height: 1.5;
+    }
+
+    .leading-relaxed {
+        line-height: 1.625;
+    }
+
+    .leading-loose {
+        line-height: 2;
+    }
+} 

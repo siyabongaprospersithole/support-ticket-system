@@ -34,7 +34,14 @@ class TicketController extends Controller
     public function index(Request $request)
     {
         try {
-            $query = Ticket::with('user')->latest();
+            $query = Ticket::with('user')
+                         ->withCount('comments')
+                         ->when($request->sortBy, function($query, $sortBy) use ($request) {
+                             $direction = $request->sortDirection === 'desc' ? 'desc' : 'asc';
+                             return $query->orderBy($sortBy, $direction);
+                         }, function($query) {
+                             return $query->latest();
+                         });
 
             // Search filter
             if ($request->search) {
@@ -42,6 +49,11 @@ class TicketController extends Controller
                     $q->where('title', 'like', '%' . $request->search . '%')
                     ->orWhere('description', 'like', '%' . $request->search . '%');
                 });
+            }
+
+            // User filter
+            if ($request->user_filter) {
+                $query->where('user_id', $request->user_filter);
             }
 
             // Status filter
@@ -62,11 +74,32 @@ class TicketController extends Controller
                 $query->whereDate('created_at', '<=', $request->dateTo);
             }
 
-            $tickets = $query->get();
+            $tickets = $query->paginate(10)->through(function ($ticket) {
+                return [
+                    'id' => $ticket->id,
+                    'title' => $ticket->title,
+                    'status' => $ticket->status,
+                    'priority' => $ticket->priority,
+                    'created_at' => $ticket->created_at,
+                    'comments_count' => $ticket->comments_count,
+                    'user' => $ticket->user ? [
+                        'id' => $ticket->user->id,
+                        'name' => $ticket->user->name,
+                        'email' => $ticket->user->email,
+                    ] : null,
+                ];
+            });
+
+            // Get users for the filter dropdown
+            $users = User::select('id', 'name', 'email')
+                        ->orderBy('name')
+                        ->get();
+
 
             return Inertia::render('Tickets/Index', [
                 'tickets' => $tickets,
-                'filters' => $request->only(['search', 'status', 'priority', 'dateFrom', 'dateTo'])
+                'filters' => $request->only(['search', 'status', 'priority', 'dateFrom', 'dateTo', 'sortBy', 'sortDirection', 'user_filter']),
+                'users' => $users,
             ]);
         } catch (Exception $e) {
             Log::error('Error fetching tickets: ' . $e->getMessage(), [
@@ -248,5 +281,101 @@ class TicketController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    /**
+     * Bulk update tickets.
+     */
+    public function bulkUpdate(Request $request)
+    {
+        try {
+            $request->validate([
+                'ids' => 'required|array',
+                'ids.*' => 'exists:tickets,id',
+                'status' => 'sometimes|in:open,closed',
+                'priority' => 'sometimes|in:critical,high,medium,low'
+            ]);
+
+            DB::beginTransaction();
+
+            $tickets = Ticket::whereIn('id', $request->ids)->get();
+            
+            foreach ($tickets as $ticket) {
+                $oldStatus = $ticket->status;
+                
+                if ($request->has('status')) {
+                    $ticket->status = $request->status;
+                }
+                
+                if ($request->has('priority')) {
+                    $ticket->priority = $request->priority;
+                }
+                
+                $ticket->save();
+
+                // Notify users if status changed
+                if ($request->has('status') && $oldStatus !== $ticket->status) {
+                    try {
+                        // Notify the ticket owner
+                        $ticket->user->notify(new TicketStatusChanged($ticket, $oldStatus));
+                        
+                        // Notify users who have commented on this ticket (except the ticket owner)
+                        $commenters = $ticket->comments()
+                            ->with('user')
+                            ->get()
+                            ->pluck('user')
+                            ->unique('id')
+                            ->reject(function ($user) use ($ticket) {
+                                return $user->id === $ticket->user_id;
+                            });
+                            
+                        Notification::send($commenters, new TicketStatusChanged($ticket, $oldStatus));
+                    } catch (Exception $e) {
+                        // Log notification errors but don't fail the request
+                        Log::error('Error sending ticket status change notifications: ' . $e->getMessage(), [
+                            'exception' => $e,
+                            'ticket_id' => $ticket->id
+                        ]);
+                    }
+                }
+            }
+
+            DB::commit();
+
+            return back()->with('success', 'Selected tickets have been updated successfully.');
+        } catch (Exception $e) {
+            DB::rollBack();
+            
+            Log::error('Error updating tickets in bulk: ' . $e->getMessage(), [
+                'exception' => $e,
+                'request_data' => $request->all()
+            ]);
+            
+            return back()->with('error', 'An error occurred while updating the tickets. Please try again.');
+        }
+    }
+
+    /**
+     * Bulk delete tickets.
+     */
+    public function bulkDelete(Request $request)
+    {
+        try {
+            $request->validate([
+                'ids' => 'required|array',
+                'ids.*' => 'exists:tickets,id'
+            ]);
+
+            Ticket::whereIn('id', $request->ids)->delete();
+
+            return back()->with('success', 'Selected tickets have been deleted successfully.');
+        } catch (Exception $e) {
+            Log::error('Error deleting tickets in bulk: ' . $e->getMessage(), [
+                'exception' => $e,
+                'request_data' => $request->all()
+            ]);
+            
+            return back()->with('error', 'An error occurred while deleting the tickets. Please try again.');
+        }
     }
 }

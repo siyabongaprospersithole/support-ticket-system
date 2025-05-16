@@ -1,6 +1,68 @@
+
+
+@import 'vue-select/dist/vue-select.css';
+
+/* Base styles */
+@import 'base/animations.css';
+@import 'base/typography.css';
+
+/* Component styles */
+@import 'components/buttons.css';
+@import 'components/cards.css';
+@import 'components/forms.css';
+@import 'components/comments.css';
+
+/* Page-specific styles */
+@import 'pages/tickets.css';
+@import 'pages/welcome.css';
+@import 'pages/activities.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Global styles */
+@layer base {
+    html {
+        @apply antialiased text-gray-900;
+    }
+
+    body {
+        @apply bg-gray-50 min-h-screen;
+    }
+
+    h1 {
+        @apply text-2xl font-bold text-gray-900 sm:text-3xl;
+    }
+
+    h2 {
+        @apply text-xl font-semibold text-gray-900 sm:text-2xl;
+    }
+
+    h3 {
+        @apply text-lg font-medium text-gray-900 sm:text-xl;
+    }
+
+    a {
+        @apply text-indigo-600 hover:text-indigo-500 transition-colors duration-200;
+    }
+
+    /* Custom scrollbar styles */
+    ::-webkit-scrollbar {
+        @apply w-2;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-gray-100 rounded-full;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-gray-300 rounded-full hover:bg-gray-400 transition-colors duration-200;
+    }
+
+    /* Focus styles */
+    *:focus-visible {
+        @apply outline-none ring-2 ring-indigo-500 ring-offset-2;
+    }
+}
 
 @layer utilities {
     .animate-fade-in {
@@ -124,4 +186,8 @@
 
 .priority-low {
     @apply bg-green-100 text-green-800;
+}
+
+[x-cloak] {
+    display: none;
 }

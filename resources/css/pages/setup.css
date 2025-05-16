@@ -1,0 +1,142 @@
+@layer pages {
+    /* Setup Page Layout */
+    .setup-page {
+        @apply min-h-screen bg-gradient-to-br from-blue-900 to-indigo-900 flex flex-col justify-center items-center p-6;
+    }
+
+    .setup-container {
+        @apply max-w-4xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden;
+    }
+
+    .setup-header {
+        @apply bg-gradient-to-r from-indigo-600 to-blue-500 px-6 py-8 text-white relative overflow-hidden;
+    }
+
+    .setup-header-bg {
+        @apply absolute inset-0 opacity-10;
+    }
+
+    .setup-header-circle-1 {
+        @apply absolute left-5 top-10 w-12 h-12 bg-white rounded-full;
+    }
+
+    .setup-header-circle-2 {
+        @apply absolute right-12 bottom-12 w-20 h-20 bg-white rounded-full;
+    }
+
+    .setup-header-circle-3 {
+        @apply absolute right-1/4 top-1/3 w-8 h-8 bg-white rounded-full;
+    }
+
+    /* Progress Bar */
+    .progress-bar {
+        @apply bg-gray-50 px-6 py-4 border-b;
+    }
+
+    .progress-steps {
+        @apply flex items-center justify-between;
+    }
+
+    .step-indicator {
+        @apply w-10 h-10 rounded-full flex items-center justify-center border-2;
+    }
+
+    .step-indicator-completed {
+        @apply border-green-500 bg-green-50;
+    }
+
+    .step-indicator-current {
+        @apply border-blue-500 bg-blue-50;
+    }
+
+    .step-indicator-pending {
+        @apply border-gray-300 bg-white;
+    }
+
+    .step-line {
+        @apply hidden sm:block absolute h-0.5 w-16 bg-gray-200 top-5 left-10;
+    }
+
+    .step-line-completed {
+        @apply bg-green-500;
+    }
+
+    .step-title {
+        @apply text-xs mt-2 font-medium text-center;
+    }
+
+    .step-title-completed {
+        @apply text-green-600;
+    }
+
+    .step-title-current {
+        @apply text-blue-600;
+    }
+
+    .step-title-pending {
+        @apply text-gray-500;
+    }
+
+    /* Form Elements */
+    .form-group {
+        @apply mb-4;
+    }
+
+    .form-label {
+        @apply block text-sm font-medium text-gray-700 mb-1;
+    }
+
+    .form-input {
+        @apply w-full rounded-md border-gray-300 shadow-sm;
+    }
+
+    /* Status Messages */
+    .error-message {
+        @apply my-4 p-4 rounded-md bg-red-50 text-red-700 border border-red-200;
+    }
+
+    .loading-indicator {
+        @apply my-4 p-4 rounded-md bg-blue-50 text-blue-700 border border-blue-200;
+    }
+
+    .migration-output {
+        @apply my-4 p-4 rounded-md bg-gray-800 text-green-400 text-xs font-mono max-h-60 overflow-auto;
+    }
+
+    .info-box {
+        @apply bg-blue-50 p-4 rounded-md mb-6;
+    }
+
+    .success-box {
+        @apply bg-green-50 p-4 rounded-md mb-6;
+    }
+
+    .summary-box {
+        @apply p-4 bg-gray-50 rounded-lg mb-6;
+    }
+
+    /* Footer */
+    .setup-footer {
+        @apply bg-gray-50 px-6 py-4 flex justify-between items-center border-t;
+    }
+
+    .footer-credit {
+        @apply mt-6 text-white text-sm opacity-70;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from { 
+            opacity: 0; 
+            transform: translateY(10px); 
+        }
+        to { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+    }
+
+    .animate-fadeIn {
+        animation: fadeIn 0.3s ease-in-out;
+    }
+} 

@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Traits\LogsActivity;
 
 class Ticket extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
     protected $fillable = [
         'title',
@@ -58,5 +59,34 @@ class Ticket extends Model
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class)->latest();
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::updating(function ($ticket) {
+            if ($ticket->isDirty('status')) {
+                $ticket->recordActivity(
+                    'status_changed',
+                    "Status changed from {$ticket->getOriginal('status')} to {$ticket->status}",
+                    [
+                        'old' => $ticket->getOriginal('status'),
+                        'new' => $ticket->status
+                    ]
+                );
+            }
+
+            if ($ticket->isDirty('priority')) {
+                $ticket->recordActivity(
+                    'priority_changed',
+                    "Priority changed from {$ticket->getOriginal('priority')} to {$ticket->priority}",
+                    [
+                        'old' => $ticket->getOriginal('priority'),
+                        'new' => $ticket->priority
+                    ]
+                );
+            }
+        });
     }
 }

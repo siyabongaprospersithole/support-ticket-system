@@ -1,0 +1,21 @@
+@layer base {
+    .custom-button {
+        @apply px-4 py-2 text-white text-sm font-medium rounded-md shadow-sm transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500;
+    }
+
+    .glass-button {
+        @apply flex items-center px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-md shadow-sm transition-all duration-300 transform hover:scale-105 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500;
+    }
+
+    .gradient-button {
+        @apply flex items-center px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-medium rounded-md shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
+    }
+
+    .view-button {
+        @apply inline-flex items-center px-3 py-1.5 rounded-md text-indigo-600 bg-indigo-50 hover:bg-indigo-100 transition-colors duration-200;
+    }
+
+    .bulk-delete-button {
+        @apply inline-flex items-center px-3 py-1.5 bg-red-50 text-red-600 text-sm font-medium rounded-md hover:bg-red-100 transition-colors duration-200;
+    }
+} 

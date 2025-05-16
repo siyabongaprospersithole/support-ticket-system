@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\SetupController;
+use App\Http\Controllers\ActivityController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -56,8 +57,25 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Ticket Routes
-    Route::resource('tickets', TicketController::class)->except(['edit', 'destroy']);
-    Route::post('/tickets/{ticket}/comments', [CommentController::class, 'store'])->name('tickets.comments.store');
+    Route::prefix('tickets')->name('tickets.')->group(function () {
+        // List and Create
+        Route::get('/', [TicketController::class, 'index'])->name('index');
+        Route::get('/create', [TicketController::class, 'create'])->name('create');
+        Route::post('/', [TicketController::class, 'store'])->name('store');
+        
+        // Bulk Actions
+        Route::patch('/bulk-update', [TicketController::class, 'bulkUpdate'])->name('bulk-update');
+        Route::delete('/bulk-delete', [TicketController::class, 'bulkDelete'])->name('bulk-delete');
+        
+        // Single Ticket Actions
+        Route::get('/{ticket}', [TicketController::class, 'show'])->name('show');
+        Route::patch('/{ticket}', [TicketController::class, 'update'])->name('update');
+        
+        // Comments
+        Route::post('/{ticket}/comments', [CommentController::class, 'store'])->name('comments.store');
+    });
+
+    Route::get('/activities', [ActivityController::class, 'index'])->name('activities.index');
 });
 
 require __DIR__.'/auth.php';

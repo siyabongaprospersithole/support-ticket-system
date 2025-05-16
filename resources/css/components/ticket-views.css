@@ -1,0 +1,54 @@
+@layer components {
+    .ticket-list {
+        @apply divide-y divide-gray-200 bg-white shadow-sm rounded-lg overflow-hidden;
+    }
+
+    .ticket-list-item {
+        @apply p-4 sm:px-6 hover:bg-gray-50 transition-colors duration-200;
+    }
+
+    .ticket-grid {
+        @apply grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+    }
+
+    .ticket-card {
+        @apply bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden;
+    }
+
+    .ticket-card-header {
+        @apply px-4 py-3 bg-gray-50 border-b border-gray-200;
+    }
+
+    .ticket-card-body {
+        @apply p-4 space-y-3;
+    }
+
+    .ticket-card-footer {
+        @apply px-4 py-3 bg-gray-50 border-t border-gray-200 flex justify-between items-center;
+    }
+
+    .ticket-meta {
+        @apply flex items-center space-x-2 text-sm text-gray-500;
+    }
+
+    .ticket-actions {
+        @apply flex items-center space-x-2;
+    }
+
+    .ticket-selection {
+        @apply absolute top-2 left-2 z-10 transition-opacity duration-200;
+    }
+
+    .ticket-selection-toolbar {
+        @apply fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-white rounded-lg shadow-lg 
+               border border-gray-200 px-4 py-2 flex items-center space-x-4 z-50;
+    }
+
+    .ticket-selection-count {
+        @apply text-sm font-medium text-gray-700;
+    }
+
+    .ticket-bulk-actions {
+        @apply flex items-center space-x-2;
+    }
+} 

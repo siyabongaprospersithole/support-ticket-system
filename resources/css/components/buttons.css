@@ -1,0 +1,106 @@
+@layer components {
+    /* Base button styles */
+    .custom-button {
+        @apply inline-flex items-center px-4 py-2 rounded-lg font-medium text-sm shadow-sm transition-all duration-200 transform hover:scale-105 active:scale-95;
+    }
+
+    /* Primary button */
+    .btn-primary {
+        @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+    }
+
+    /* Secondary button */
+    .btn-secondary {
+        @apply bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+    }
+
+    /* Success button */
+    .btn-success {
+        @apply bg-green-600 text-white hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2;
+    }
+
+    /* Danger button */
+    .btn-danger {
+        @apply bg-red-600 text-white hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2;
+    }
+
+    /* Warning button */
+    .btn-warning {
+        @apply bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2;
+    }
+
+    /* Info button */
+    .btn-info {
+        @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+    }
+
+    /* Glass button */
+    .glass-button {
+        @apply inline-flex items-center px-4 py-2 rounded-lg font-medium text-sm bg-white bg-opacity-20 backdrop-blur-lg border border-white border-opacity-20 shadow-lg hover:bg-opacity-30 transition-all duration-200 transform hover:scale-105 active:scale-95;
+    }
+
+    /* Outline buttons */
+    .btn-outline-primary {
+        @apply border-2 border-primary-500 text-primary-600 hover:bg-primary-50 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+    }
+
+    .btn-outline-secondary {
+        @apply border-2 border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2;
+    }
+
+    /* Icon buttons */
+    .btn-icon {
+        @apply p-2 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500;
+    }
+
+    /* Button sizes */
+    .btn-xs {
+        @apply px-2.5 py-1.5 text-xs;
+    }
+
+    .btn-sm {
+        @apply px-3 py-2 text-sm;
+    }
+
+    .btn-lg {
+        @apply px-6 py-3 text-base;
+    }
+
+    .btn-xl {
+        @apply px-8 py-4 text-lg;
+    }
+
+    /* Button groups */
+    .btn-group {
+        @apply inline-flex rounded-md shadow-sm;
+    }
+
+    .btn-group > :first-child {
+        @apply rounded-l-lg;
+    }
+
+    .btn-group > :last-child {
+        @apply rounded-r-lg;
+    }
+
+    .btn-group > :not(:first-child):not(:last-child) {
+        @apply rounded-none;
+    }
+
+    /* Loading state */
+    .btn-loading {
+        @apply relative text-transparent transition-none hover:text-transparent;
+    }
+
+    .btn-loading::after {
+        @apply absolute inset-0 flex items-center justify-center text-current;
+        content: "";
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'%3E%3Cpath stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'%3E%3C/path%3E%3C/svg%3E");
+        animation: spin 1s linear infinite;
+    }
+
+    /* Disabled state */
+    .btn-disabled, .btn[disabled] {
+        @apply opacity-50 cursor-not-allowed;
+    }
+} 

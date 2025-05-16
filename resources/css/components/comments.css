@@ -1,0 +1,55 @@
+@layer components {
+    .comment-card {
+        @apply bg-white rounded-lg shadow-sm p-4 hover:shadow-md transition-all duration-300 border border-gray-100;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .comment-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(to bottom, #6366f1, #8b5cf6);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .comment-card:hover::before {
+        opacity: 1;
+    }
+
+    .comment-header {
+        @apply flex justify-between items-center mb-2;
+    }
+
+    .comment-author {
+        @apply text-sm font-medium text-gray-900;
+    }
+
+    .comment-date {
+        @apply text-xs text-gray-500;
+    }
+
+    .comment-content {
+        @apply text-gray-700 text-sm leading-relaxed;
+    }
+
+    .comment-actions {
+        @apply mt-3 flex justify-end space-x-2;
+    }
+
+    .comment-form {
+        @apply mt-6 bg-white rounded-lg shadow-sm p-4 border border-gray-100;
+    }
+
+    .comment-textarea {
+        @apply w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500;
+    }
+
+    .comment-submit {
+        @apply mt-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
+    }
+} 

@@ -25,7 +25,7 @@ onMounted(() => {
 <template>
     <Head title="Welcome to Support Ticket System" />
 
-    <div class="relative min-h-screen bg-gradient-to-br from-indigo-900 to-blue-900 flex justify-center">
+    <div class="landing-page">
         <!-- Initial Animation (3 seconds) -->
         <div v-if="showAnimation" class="absolute inset-0 flex items-center justify-center">
             <div class="text-center">
@@ -43,37 +43,33 @@ onMounted(() => {
         <!-- Actual Content (after animation) -->
         <div v-else :class="['w-full transition-opacity duration-1000', animationCompleted ? 'opacity-100' : 'opacity-0']">
             <div v-if="canLogin" class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-                <Link v-if="$page.props.auth.user" :href="route('dashboard')" class="bg-white bg-opacity-10 hover:bg-opacity-20 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-300 backdrop-blur-sm">
+                <Link v-if="$page.props.auth.user" :href="route('dashboard')" class="glass-button bg-white bg-opacity-10 hover:bg-opacity-20">
                     Dashboard
                 </Link>
 
                 <template v-else>
-                    <a :href="route('login')" class="bg-white bg-opacity-10 hover:bg-opacity-20 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-300 backdrop-blur-sm">
+                    <a :href="route('login')" class="glass-button bg-white bg-opacity-10 hover:bg-opacity-20">
                         Log in
                     </a>
 
-                    <a v-if="canRegister" :href="route('register')" class="ml-4 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-300">
+                    <a v-if="canRegister" :href="route('register')" class="ml-4 glass-button bg-indigo-500 hover:bg-indigo-600">
                         Register
                     </a>
                 </template>
             </div>
 
-            <div class="max-w-7xl mx-auto px-6 lg:px-8 pt-32 pb-20">
+            <div class="landing-header">
                 <div class="flex flex-col items-center">
                     <!-- Logo -->
-                    <div class="rounded-full bg-white p-4 shadow-xl mb-10">
+                    <div class="landing-logo">
                         <svg class="w-24 h-24 text-indigo-600" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M19.5 3.5L18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2 4.5 3.5 3 2v20l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5zM19 19.09H5V4.91h14v14.18zM6 15h12v2H6zm0-4h12v2H6zm0-4h12v2H6z" />
                         </svg>
                     </div>
 
                     <!-- Title and Subtitle -->
-                    <h1 class="text-5xl font-extrabold text-white mb-6 text-center animate-text-shimmer bg-clip-text text-transparent bg-gradient-to-r from-indigo-200 via-blue-100 to-indigo-200 background-animate">
-                        Support Ticket System
-                    </h1>
-                    <p class="text-xl text-indigo-200 text-center max-w-3xl mb-12">
-                        A modern, efficient platform for managing support tickets and providing outstanding customer service.
-                    </p>
+                    <h1 class="landing-title">Support Ticket System</h1>
+                    <p class="landing-subtitle">A modern, efficient platform for managing support tickets and providing outstanding customer service.</p>
 
                     <!-- Call to Action -->
                     <div class="flex flex-col sm:flex-row gap-4 mb-16">
@@ -89,7 +85,7 @@ onMounted(() => {
                     </div>
 
                     <!-- Features Section -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                    <div class="landing-features">
                         <div class="feature-card">
                             <div class="feature-icon bg-indigo-600">
                                 <i class="fas fa-ticket-alt"></i>
@@ -116,7 +112,7 @@ onMounted(() => {
                     </div>
 
                     <!-- Getting Started Section -->
-                    <div class="w-full max-w-4xl rounded-2xl bg-white bg-opacity-10 backdrop-blur-sm p-8 mb-16">
+                    <div class="getting-started-section">
                         <h2 class="text-2xl font-bold text-white mb-6">Getting Started</h2>
                         <div class="space-y-4">
                             <div class="flex items-start">
@@ -150,27 +146,27 @@ onMounted(() => {
                     </div>
 
                     <!-- Tech Stack -->
-                    <div class="flex justify-center items-center space-x-8 mb-16">
+                    <div class="tech-stack">
                         <div class="text-center">
-                            <i class="fab fa-laravel text-4xl text-white mb-2"></i>
-                            <p class="text-indigo-200 text-sm">Laravel {{ laravelVersion }}</p>
+                            <i class="fab fa-laravel tech-icon"></i>
+                            <p class="tech-label">Laravel {{ laravelVersion }}</p>
                         </div>
                         <div class="text-center">
-                            <i class="fab fa-vuejs text-4xl text-white mb-2"></i>
-                            <p class="text-indigo-200 text-sm">Vue.js 3</p>
+                            <i class="fab fa-vuejs tech-icon"></i>
+                            <p class="tech-label">Vue.js 3</p>
                         </div>
                         <div class="text-center">
-                            <i class="fab fa-php text-4xl text-white mb-2"></i>
-                            <p class="text-indigo-200 text-sm">PHP {{ phpVersion }}</p>
+                            <i class="fab fa-php tech-icon"></i>
+                            <p class="tech-label">PHP {{ phpVersion }}</p>
                         </div>
                         <div class="text-center">
-                            <i class="fab fa-npm text-4xl text-white mb-2"></i>
-                            <p class="text-indigo-200 text-sm">Inertia.js</p>
+                            <i class="fab fa-npm tech-icon"></i>
+                            <p class="tech-label">Inertia.js</p>
                         </div>
                     </div>
 
                     <!-- Footer -->
-                    <div class="text-center text-indigo-300 text-sm">
+                    <div class="landing-footer">
                         <p>Support Ticket System &copy; {{ new Date().getFullYear() }}</p>
                         <p class="mt-2">Made with <i class="fas fa-heart text-red-500"></i> by Team Swiffy</p>
                     </div>
@@ -179,85 +175,3 @@ onMounted(() => {
         </div>
     </div>
 </template>
-
-<style scoped>
-/* Base Animations */
-@keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes delayed-fade-in {
-    0% { opacity: 0; }
-    50% { opacity: 0; }
-    100% { opacity: 1; }
-}
-
-@keyframes circle-draw {
-    from { stroke-dashoffset: 300; }
-    to { stroke-dashoffset: 0; }
-}
-
-@keyframes checkmark-draw {
-    0% { stroke-dashoffset: 100; }
-    60% { stroke-dashoffset: 100; }
-    100% { stroke-dashoffset: 0; }
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-@keyframes shimmer {
-    0% { background-position: -500px 0; }
-    100% { background-position: 500px 0; }
-}
-
-.animate-circle {
-    stroke-dasharray: 300;
-    stroke-dashoffset: 300;
-    animation: circle-draw 2s ease forwards;
-}
-
-.animate-checkmark {
-    stroke-dasharray: 100;
-    stroke-dashoffset: 100;
-    animation: checkmark-draw 2s ease forwards;
-}
-
-.animate-fade-in {
-    animation: fade-in 1s ease forwards;
-}
-
-.animate-fade-in-delayed {
-    animation: delayed-fade-in 2s ease forwards;
-}
-
-.animate-logo {
-    animation: pulse 2s infinite;
-}
-
-.animate-text-shimmer {
-    background-size: 200% 100%;
-    animation: shimmer 2s infinite linear;
-}
-
-.background-animate {
-    background-size: 200%;
-}
-
-/* Component Styles */
-.glass-button {
-    @apply text-white font-semibold py-3 px-6 rounded-lg shadow transition duration-300 transform hover:scale-105 active:scale-100 text-center backdrop-blur-sm;
-}
-
-.feature-card {
-    @apply p-6 rounded-xl bg-white bg-opacity-10 backdrop-blur-sm transform transition duration-300 hover:translate-y-[-5px] hover:shadow-lg;
-}
-
-.feature-icon {
-    @apply w-14 h-14 rounded-full flex items-center justify-center text-white text-2xl;
-}
-</style>

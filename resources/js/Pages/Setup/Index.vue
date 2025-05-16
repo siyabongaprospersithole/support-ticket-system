@@ -286,14 +286,14 @@ const resetSetup = () => {
 <template>
     <Head title="Setup Support Ticket System" />
 
-    <div class="min-h-screen bg-gradient-to-br from-blue-900 to-indigo-900 flex flex-col justify-center items-center p-6">
-        <div class="max-w-4xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden">
+    <div class="setup-page">
+        <div class="setup-container">
             <!-- Header -->
-            <div class="bg-gradient-to-r from-indigo-600 to-blue-500 px-6 py-8 text-white relative overflow-hidden">
-                <div class="absolute inset-0 opacity-10">
-                    <div class="absolute left-5 top-10 w-12 h-12 bg-white rounded-full"></div>
-                    <div class="absolute right-12 bottom-12 w-20 h-20 bg-white rounded-full"></div>
-                    <div class="absolute right-1/4 top-1/3 w-8 h-8 bg-white rounded-full"></div>
+            <div class="setup-header">
+                <div class="setup-header-bg">
+                    <div class="setup-header-circle-1"></div>
+                    <div class="setup-header-circle-2"></div>
+                    <div class="setup-header-circle-3"></div>
                 </div>
                 <h1 class="text-3xl font-bold flex items-center">
                     <i class="fas fa-ticket-alt mr-3"></i>
@@ -305,28 +305,32 @@ const resetSetup = () => {
             </div>
 
             <!-- Progress Bar -->
-            <div class="bg-gray-50 px-6 py-4 border-b">
-                <div class="flex items-center justify-between">
+            <div class="progress-bar">
+                <div class="progress-steps">
                     <div v-for="(step, index) in steps" :key="step.id" class="flex flex-col items-center">
                         <div class="relative">
                             <div :class="[
-                                'w-10 h-10 rounded-full flex items-center justify-center border-2',
-                                step.completed ? 'border-green-500 bg-green-50' : 
-                                step.current ? 'border-blue-500 bg-blue-50' : 
-                                'border-gray-300 bg-white'
+                                'step-indicator',
+                                step.completed ? 'step-indicator-completed' : 
+                                step.current ? 'step-indicator-current' : 
+                                'step-indicator-pending'
                             ]">
                                 <i :class="getStepIconClasses(step)"></i>
                             </div>
                             
                             <!-- Connection line between steps -->
-                            <div v-if="index < steps.length - 1" class="hidden sm:block absolute h-0.5 w-16 bg-gray-200 top-5 left-10" 
-                                 :class="{'bg-green-500': step.completed}"></div>
+                            <div v-if="index < steps.length - 1" 
+                                 :class="['step-line', { 'step-line-completed': step.completed }]">
+                            </div>
                         </div>
-                        <span class="text-xs mt-2 font-medium text-center" :class="{
-                            'text-green-600': step.completed,
-                            'text-blue-600': step.current && !step.completed,
-                            'text-gray-500': !step.current && !step.completed
-                        }">{{ step.title }}</span>
+                        <span :class="[
+                            'step-title',
+                            {
+                                'step-title-completed': step.completed,
+                                'step-title-current': step.current && !step.completed,
+                                'step-title-pending': !step.current && !step.completed
+                            }
+                        ]">{{ step.title }}</span>
                     </div>
                 </div>
             </div>
@@ -334,7 +338,7 @@ const resetSetup = () => {
             <!-- Main Content Area -->
             <div class="p-6">
                 <!-- Status Messages -->
-                <div v-if="error" class="my-4 p-4 rounded-md bg-red-50 text-red-700 border border-red-200">
+                <div v-if="error" class="error-message">
                     <div class="flex">
                         <div class="flex-shrink-0">
                             <i class="fas fa-exclamation-circle text-red-500"></i>
@@ -346,7 +350,7 @@ const resetSetup = () => {
                 </div>
                 
                 <!-- Loading Indicator -->
-                <div v-if="loading" class="my-4 p-4 rounded-md bg-blue-50 text-blue-700 border border-blue-200">
+                <div v-if="loading" class="loading-indicator">
                     <div class="flex items-center">
                         <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -357,11 +361,11 @@ const resetSetup = () => {
                 </div>
                 
                 <!-- Migration Output -->
-                <div v-if="migrationOutput" class="my-4 p-4 rounded-md bg-gray-800 text-green-400 text-xs font-mono max-h-60 overflow-auto">
+                <div v-if="migrationOutput" class="migration-output">
                     <pre>{{ migrationOutput }}</pre>
                 </div>
 
-                <!-- Step 1: Requirements -->
+                <!-- Step Content -->
                 <div v-if="currentStep === 1" class="animate-fadeIn">
                     <h2 class="text-lg font-semibold text-gray-700 mb-4">System Requirements</h2>
                     
@@ -396,7 +400,6 @@ const resetSetup = () => {
                     </div>
                 </div>
 
-                <!-- Step 2: Database Configuration -->
                 <div v-if="currentStep === 2" class="animate-fadeIn">
                     <h2 class="text-lg font-semibold text-gray-700 mb-4">Database Configuration</h2>
                     
@@ -442,11 +445,9 @@ const resetSetup = () => {
                     </button>
                 </div>
 
-                <!-- Step 3: Migrations -->
                 <div v-if="currentStep === 3" class="animate-fadeIn">
                     <h2 class="text-lg font-semibold text-gray-700 mb-4">Database Migrations</h2>
-                    
-                    <div class="bg-blue-50 p-4 rounded-md mb-6">
+                    <div class="info-box">
                         <div class="flex">
                             <div class="flex-shrink-0">
                                 <i class="fas fa-info-circle text-blue-500 text-lg"></i>
@@ -460,7 +461,6 @@ const resetSetup = () => {
                     </div>
                 </div>
 
-                <!-- Step 4: Mail Configuration -->
                 <div v-if="currentStep === 4" class="animate-fadeIn">
                     <h2 class="text-lg font-semibold text-gray-700 mb-4">Mail Configuration</h2>
                     
@@ -519,11 +519,9 @@ const resetSetup = () => {
                     </div>
                 </div>
 
-                <!-- Step 5: Finalize -->
                 <div v-if="currentStep === 5" class="animate-fadeIn">
                     <h2 class="text-lg font-semibold text-gray-700 mb-4">Finalize Setup</h2>
-                    
-                    <div class="bg-green-50 p-4 rounded-md mb-6">
+                    <div class="success-box">
                         <div class="flex">
                             <div class="flex-shrink-0">
                                 <i class="fas fa-check-circle text-green-500 text-lg"></i>
@@ -537,7 +535,7 @@ const resetSetup = () => {
                         </div>
                     </div>
                     
-                    <div class="p-4 bg-gray-50 rounded-lg mb-6">
+                    <div class="summary-box">
                         <h3 class="font-medium text-gray-700 mb-2">Configuration Summary</h3>
                         <div class="space-y-2 text-sm">
                             <p><span class="font-medium">Database:</span> {{ dbForm.connection }} ({{ dbForm.database }})</p>
@@ -547,15 +545,15 @@ const resetSetup = () => {
                 </div>
             </div>
 
-            <!-- Footer with action buttons -->
-            <div class="bg-gray-50 px-6 py-4 flex justify-between items-center border-t">
+            <!-- Footer -->
+            <div class="setup-footer">
                 <button v-if="currentStep > 1" @click="prevStep" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">
                     <i class="fas fa-arrow-left mr-2"></i> Previous
                 </button>
                 <div v-else></div>
                 
                 <div class="flex items-center">
-                    <!-- Hidden developer reset button (only shown in development) -->
+                    <!-- Hidden developer reset button -->
                     <button v-if="isDevelopment" 
                             @click="resetSetup" 
                             type="button"
@@ -563,7 +561,10 @@ const resetSetup = () => {
                         Reset
                     </button>
                     
-                    <button v-if="currentStep === 1" @click="nextStep" :disabled="!requirementsAllMet" 
+                    <!-- Action buttons for each step -->
+                    <button v-if="currentStep === 1" 
+                            @click="nextStep" 
+                            :disabled="!requirementsAllMet" 
                             :class="[
                                 'px-4 py-2 rounded-md',
                                 requirementsAllMet ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-blue-300 text-white cursor-not-allowed'
@@ -571,19 +572,27 @@ const resetSetup = () => {
                         Next <i class="fas fa-arrow-right ml-2"></i>
                     </button>
                     
-                    <button v-else-if="currentStep === 2" @click="saveDatabase" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                    <button v-else-if="currentStep === 2" 
+                            @click="saveDatabase" 
+                            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
                         <i class="fas fa-arrow-right mr-2"></i> Continue
                     </button>
                     
-                    <button v-else-if="currentStep === 3" @click="runMigrations" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                    <button v-else-if="currentStep === 3" 
+                            @click="runMigrations" 
+                            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
                         Run Migrations <i class="fas fa-database ml-2"></i>
                     </button>
                     
-                    <button v-else-if="currentStep === 4" @click="saveMail" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                    <button v-else-if="currentStep === 4" 
+                            @click="saveMail" 
+                            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
                         <i class="fas fa-arrow-right mr-2"></i> Continue
                     </button>
                     
-                    <button v-else-if="currentStep === 5" @click="finalizeSetup" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                    <button v-else-if="currentStep === 5" 
+                            @click="finalizeSetup" 
+                            class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
                         Complete Setup <i class="fas fa-check ml-2"></i>
                     </button>
                 </div>
@@ -591,21 +600,9 @@ const resetSetup = () => {
         </div>
         
         <!-- Footer credit -->
-        <div class="mt-6 text-white text-sm opacity-70">
+        <div class="footer-credit">
             Support Ticket System &copy; {{ new Date().getFullYear() }} • Powered by Laravel & Vue
         </div>
+        
     </div>
 </template>
-
-<style>
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fadeIn {
-    animation: fadeIn 0.3s ease-in-out;
-}
-
-/* Add required Font Awesome CDN in app.blade.php */
-</style> 

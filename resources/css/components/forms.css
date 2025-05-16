@@ -1,0 +1,141 @@
+@layer components {
+    /* Form group */
+    .form-group {
+        @apply mb-4;
+    }
+
+    /* Labels */
+    .form-label {
+        @apply block text-sm font-medium text-gray-700 mb-1;
+    }
+
+    /* Text inputs */
+    .form-input {
+        @apply block w-full rounded-lg border-gray-300 shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-all duration-200;
+    }
+
+    /* Select inputs */
+    .form-select {
+        @apply block w-full rounded-lg border-gray-300 shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-all duration-200;
+    }
+
+    /* Textarea */
+    .form-textarea {
+        @apply block w-full rounded-lg border-gray-300 shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-all duration-200;
+    }
+
+    /* Checkbox and Radio */
+    .form-checkbox {
+        @apply rounded border-gray-300 text-primary-600 shadow-sm focus:ring-primary-500;
+    }
+
+    .form-radio {
+        @apply border-gray-300 text-primary-600 shadow-sm focus:ring-primary-500;
+    }
+
+    /* Input sizes */
+    .form-input-sm {
+        @apply px-2 py-1 text-sm;
+    }
+
+    .form-input-lg {
+        @apply px-4 py-3 text-base;
+    }
+
+    /* Input states */
+    .form-input-error {
+        @apply border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500;
+    }
+
+    .form-input-success {
+        @apply border-green-300 text-green-900 placeholder-green-300 focus:ring-green-500 focus:border-green-500;
+    }
+
+    /* Help text */
+    .form-help-text {
+        @apply mt-1 text-sm text-gray-500;
+    }
+
+    .form-error-text {
+        @apply mt-1 text-sm text-red-600;
+    }
+
+    .form-success-text {
+        @apply mt-1 text-sm text-green-600;
+    }
+
+    /* Input groups */
+    .input-group {
+        @apply relative flex rounded-lg shadow-sm;
+    }
+
+    .input-group-text {
+        @apply inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm;
+    }
+
+    .input-group .form-input {
+        @apply flex-1 min-w-0 rounded-none;
+    }
+
+    .input-group > :first-child .form-input {
+        @apply rounded-l-lg;
+    }
+
+    .input-group > :last-child .form-input {
+        @apply rounded-r-lg;
+    }
+
+    /* Search input */
+    .search-input {
+        @apply pl-10 pr-4;
+    }
+
+    .search-input-icon {
+        @apply absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400;
+    }
+
+    /* File input */
+    .form-file {
+        @apply block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100 transition-all duration-200;
+    }
+
+    /* Toggle switch */
+    .form-switch {
+        @apply relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+    }
+
+    .form-switch-inner {
+        @apply pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out;
+    }
+
+    /* Form grid */
+    .form-grid {
+        @apply grid gap-6;
+    }
+
+    .form-grid-cols-2 {
+        @apply grid-cols-1 sm:grid-cols-2;
+    }
+
+    .form-grid-cols-3 {
+        @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-3;
+    }
+
+    /* Loading state */
+    .form-loading {
+        @apply opacity-75 pointer-events-none;
+    }
+
+    /* Validation icons */
+    .form-validation-icon {
+        @apply absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none;
+    }
+
+    .form-validation-icon-error {
+        @apply text-red-500;
+    }
+
+    .form-validation-icon-success {
+        @apply text-green-500;
+    }
+} 

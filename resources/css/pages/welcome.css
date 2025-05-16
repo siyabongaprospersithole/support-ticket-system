@@ -1,0 +1,101 @@
+@layer pages {
+    /* Landing Page Animations */
+    @keyframes circle-draw {
+        from { stroke-dashoffset: 300; }
+        to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes checkmark-draw {
+        0% { stroke-dashoffset: 100; }
+        60% { stroke-dashoffset: 100; }
+        100% { stroke-dashoffset: 0; }
+    }
+
+    @keyframes shimmer {
+        0% { background-position: -500px 0; }
+        100% { background-position: 500px 0; }
+    }
+
+    .animate-circle {
+        stroke-dasharray: 300;
+        stroke-dashoffset: 300;
+        animation: circle-draw 2s ease forwards;
+    }
+
+    .animate-checkmark {
+        stroke-dasharray: 100;
+        stroke-dashoffset: 100;
+        animation: checkmark-draw 2s ease forwards;
+    }
+
+    .animate-logo {
+        animation: pulse 2s infinite;
+    }
+
+    .animate-text-shimmer {
+        background-size: 200% 100%;
+        animation: shimmer 2s infinite linear;
+    }
+
+    .background-animate {
+        background-size: 200%;
+    }
+
+    /* Landing Page Components */
+    .glass-button {
+        @apply text-white font-semibold py-3 px-6 rounded-lg shadow transition duration-300 transform hover:scale-105 active:scale-100 text-center backdrop-blur-sm;
+    }
+
+    .feature-card {
+        @apply p-6 rounded-xl bg-white bg-opacity-10 backdrop-blur-sm transform transition duration-300 hover:translate-y-[-5px] hover:shadow-lg;
+    }
+
+    .feature-icon {
+        @apply w-14 h-14 rounded-full flex items-center justify-center text-white text-2xl;
+    }
+
+    /* Landing Page Layout */
+    .landing-page {
+        @apply relative min-h-screen bg-gradient-to-br from-indigo-900 to-blue-900 flex justify-center;
+    }
+
+    .landing-header {
+        @apply max-w-7xl mx-auto px-6 lg:px-8 pt-32 pb-20;
+    }
+
+    .landing-logo {
+        @apply rounded-full bg-white p-4 shadow-xl mb-10;
+    }
+
+    .landing-title {
+        @apply text-5xl font-extrabold text-white mb-6 text-center animate-text-shimmer bg-clip-text text-transparent bg-gradient-to-r from-indigo-200 via-blue-100 to-indigo-200;
+    }
+
+    .landing-subtitle {
+        @apply text-xl text-indigo-200 text-center max-w-3xl mb-12;
+    }
+
+    .landing-features {
+        @apply grid grid-cols-1 md:grid-cols-3 gap-8 mb-16;
+    }
+
+    .getting-started-section {
+        @apply w-full max-w-4xl rounded-2xl bg-white bg-opacity-10 backdrop-blur-sm p-8 mb-16;
+    }
+
+    .tech-stack {
+        @apply flex justify-center items-center space-x-8 mb-16;
+    }
+
+    .tech-icon {
+        @apply text-4xl text-white mb-2;
+    }
+
+    .tech-label {
+        @apply text-indigo-200 text-sm;
+    }
+
+    .landing-footer {
+        @apply text-center text-indigo-300 text-sm;
+    }
+} 

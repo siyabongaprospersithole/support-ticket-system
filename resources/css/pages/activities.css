@@ -1,0 +1,211 @@
+@layer pages {
+    /* Page Container */
+    .activity-wrapper{
+        width: 100%;
+    }
+    .activity-page {
+        @apply max-w-7xl mx-auto sm:px-6 lg:px-8 py-12;
+    }
+
+    /* Header Section */
+    .activity-header {
+        @apply flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0 mb-8 bg-white p-6 rounded-xl shadow-sm border border-gray-100;
+    }
+
+    .activity-title {
+        @apply flex items-center text-2xl font-semibold text-gray-900;
+    }
+
+    .activity-title svg {
+        @apply w-6 h-6 text-primary-500 mr-3;
+    }
+
+    /* Search and Filters */
+    .activity-filters {
+        @apply flex flex-col sm:flex-row gap-4;
+    }
+
+    .activity-search {
+        @apply relative flex-1 max-w-md;
+    }
+
+    .activity-search-input {
+        @apply w-full pl-14 pr-4 py-2.5 text-sm text-gray-900 rounded-lg border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all duration-200 placeholder-gray-400;
+        text-indent: 26px;
+    }
+
+    .activity-search-icon {
+        @apply absolute w-4 h-4 text-gray-400;
+        left: 16px;
+        top: calc(50% - 9px);
+    }
+
+    .activity-type-select {
+        @apply min-w-[160px] py-2.5 pl-4 pr-10 text-sm rounded-lg border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all duration-200 bg-white text-gray-900;
+    }
+
+    /* Timeline */
+    .activity-timeline {
+        @apply relative pb-8;
+    }
+
+    .activity-list {
+        @apply relative;
+    }
+
+    /* Timeline line */
+    .activity-line {
+        @apply absolute left-6 top-0 h-full w-0.5 bg-gray-100;
+    }
+
+    /* Activity Item */
+    .activity-item {
+        @apply relative flex gap-x-4 pb-8;
+    }
+
+    .activity-item:last-child {
+        @apply pb-0;
+    }
+
+    /* Activity Icon */
+    .activity-icon-wrapper {
+        @apply relative z-10 flex-none w-12 h-12 rounded-full flex items-center justify-center ring-8 ring-white transition-transform duration-200;
+    }
+
+    /* Apply hover effect directly */
+    .activity-item:hover .activity-icon-wrapper {
+        @apply transform scale-110;
+    }
+
+    .activity-icon-wrapper svg {
+        @apply w-5 h-5;
+    }
+
+    /* Activity Content */
+    .activity-content {
+        @apply flex-auto bg-white rounded-xl p-4 shadow-sm border border-gray-100 -mt-1.5 transition-colors duration-200;
+    }
+
+    /* Apply hover effect directly */
+    .activity-item:hover .activity-content {
+        @apply bg-gray-50;
+    }
+
+    .activity-header-content {
+        @apply flex flex-wrap items-start justify-between gap-x-2;
+    }
+
+    .activity-description {
+        @apply text-sm font-medium text-gray-900 flex items-center gap-x-2;
+    }
+
+    .activity-meta {
+        @apply flex flex-wrap items-center gap-x-4 text-sm text-gray-500;
+    }
+
+    .activity-user {
+        @apply flex items-center gap-x-2;
+    }
+
+    .activity-avatar {
+        @apply w-6 h-6 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 text-white flex items-center justify-center text-xs font-medium shadow-sm;
+    }
+
+    .activity-time {
+        @apply whitespace-nowrap text-sm text-gray-500;
+    }
+
+    /* Activity Details */
+    .activity-details {
+        @apply mt-2 text-sm text-gray-600;
+    }
+
+    .activity-id {
+        @apply inline-flex items-center px-2 py-1 rounded-md bg-gray-100 text-gray-600 text-xs font-medium;
+    }
+
+    /* Activity Types */
+    .activity-icon-created {
+        @apply bg-green-100 text-green-600;
+    }
+
+    .activity-icon-updated {
+        @apply bg-blue-100 text-blue-600;
+    }
+
+    .activity-icon-deleted {
+        @apply bg-red-100 text-red-600;
+    }
+
+    .activity-icon-commented {
+        @apply bg-purple-100 text-purple-600;
+    }
+
+    .activity-icon-status_changed {
+        @apply bg-yellow-100 text-yellow-600;
+    }
+
+    .activity-icon-priority_changed {
+        @apply bg-orange-100 text-orange-600;
+    }
+
+    /* Empty State */
+    .activity-empty {
+        @apply flex flex-col items-center justify-center py-12 px-4 text-center bg-white rounded-xl shadow-sm border border-gray-100;
+    }
+
+    .activity-empty-icon {
+        @apply w-16 h-16 text-gray-400 mb-4;
+    }
+
+    .activity-empty-text {
+        @apply text-lg font-medium text-gray-900 mb-2;
+    }
+
+    .activity-empty-subtext {
+        @apply text-sm text-gray-500 max-w-sm;
+    }
+
+    /* Animations */
+    .activity-item {
+        animation: slideIn 0.3s ease-out;
+        animation-fill-mode: both;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Hover Effects */
+    .activity-search-input:focus {
+        @apply shadow-sm;
+    }
+
+    .activity-type-select:hover {
+        @apply shadow-sm;
+    }
+
+    /* Responsive Design */
+    @screen sm {
+        .activity-content {
+            @apply p-5;
+        }
+
+        .activity-header-content {
+            @apply flex-nowrap;
+        }
+    }
+
+    @screen md {
+        .activity-filters {
+            @apply flex-row items-center;
+        }
+    }
+} 

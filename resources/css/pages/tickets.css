@@ -1,0 +1,69 @@
+@layer pages {
+    /* Ticket Index Page */
+    .ticket-index {
+        @apply py-12 bg-gradient-to-b from-gray-50 to-white;
+    }
+
+    .ticket-container {
+        @apply max-w-7xl mx-auto sm:px-6 lg:px-8;
+    }
+
+    .ticket-card {
+        @apply bg-white overflow-hidden rounded-xl shadow-sm border border-gray-100 backdrop-filter backdrop-blur-lg;
+    }
+
+    .ticket-header {
+        @apply flex justify-between items-center;
+    }
+
+    .ticket-title {
+        @apply font-semibold text-xl text-gray-800 leading-tight flex items-center;
+    }
+
+    .ticket-filters {
+        @apply mb-6 p-6 bg-white rounded-xl shadow-sm border border-gray-100;
+    }
+
+    .ticket-search {
+        @apply block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg leading-5 bg-white 
+               placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 
+               focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-all duration-200 
+               hover:shadow-sm;
+    }
+
+    .ticket-select {
+        @apply block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-2 
+               focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-lg transition-all 
+               duration-200 hover:shadow-sm;
+    }
+
+    /* Ticket Show Page */
+    .ticket-details {
+        @apply bg-white shadow-sm rounded-lg p-6;
+    }
+
+    .ticket-description {
+        @apply mt-4 text-gray-600 leading-relaxed;
+    }
+
+    .ticket-meta-info {
+        @apply mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4;
+    }
+
+    .ticket-comments {
+        @apply mt-8 space-y-6;
+    }
+
+    .comment-form {
+        @apply mt-6 bg-white rounded-lg shadow-sm p-4 border border-gray-100;
+    }
+
+    /* Ticket Create Page */
+    .create-form {
+        @apply space-y-6 bg-white shadow-sm rounded-lg p-6;
+    }
+
+    .form-section {
+        @apply grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2;
+    }
+} 

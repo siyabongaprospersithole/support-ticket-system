@@ -121,7 +121,7 @@ A modern, feature-rich support ticket management system built with Laravel and V
    MAIL_FROM_NAME="${APP_NAME}"
    ```
 
-6. Run migrations and seed the database
+6. Clear Cache and Run migrations and seed the database
    ```bash
    php artisan migrate --seed
    ```
