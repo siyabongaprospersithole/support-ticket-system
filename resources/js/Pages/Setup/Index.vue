@@ -91,6 +91,7 @@ onMounted(() => {
     
     // Update forms with initial values from props if they're not already set
     if (!dbForm.value.database) {
+  
         setupStore.updateDbForm({
             connection: props.dbConfig.connection,
             host: props.dbConfig.host,
