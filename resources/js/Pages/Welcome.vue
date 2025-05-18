@@ -73,7 +73,7 @@ onMounted(() => {
 
                     <!-- Call to Action -->
                     <div class="flex flex-col sm:flex-row gap-4 mb-16">
-                        <Link v-if="$page.props.auth.user" :href="route('dashboard')" class="glass-button bg-indigo-500 hover:bg-indigo-600">
+                        <Link v-if="$page.props.auth.user" :href="route('dashboard')" class="text-white glass-button bg-indigo-500 hover:bg-indigo-600">
                             <i class="fas fa-tachometer-alt mr-2"></i> Go to Dashboard
                         </Link>
                         <Link v-else :href="route('register')" class="glass-button bg-indigo-500 hover:bg-indigo-600 text-white">

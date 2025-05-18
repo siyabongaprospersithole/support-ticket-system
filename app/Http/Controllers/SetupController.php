@@ -21,6 +21,58 @@ class SetupController extends Controller
         try {
             // Check if setup has already been completed
             if (file_exists(storage_path('app/setup_completed'))) {
+                // Verify database connection
+                try {
+                    DB::connection()->getPdo();
+                } catch (\Exception $e) {
+                    // If database connection fails, remove setup completion markers
+                    if (file_exists(storage_path('app/setup_completed'))) {
+                        unlink(storage_path('app/setup_completed'));
+                    }
+                    if (file_exists(storage_path('app/setup_state.json'))) {
+                        unlink(storage_path('app/setup_state.json'));
+                    }
+                    return redirect('/setup');
+                }
+
+                // Verify migrations status
+                try {
+                    $migrationsTable = DB::table('migrations')->exists();
+                    if (!$migrationsTable) {
+                        // If migrations table doesn't exist, remove setup completion markers
+                        if (file_exists(storage_path('app/setup_completed'))) {
+                            unlink(storage_path('app/setup_completed'));
+                        }
+                        if (file_exists(storage_path('app/setup_state.json'))) {
+                            unlink(storage_path('app/setup_state.json'));
+                        }
+                        return redirect('/setup');
+                    }
+
+                    // Check if all migrations have been run
+                    $pendingMigrations = Artisan::call('migrate:status');
+                    if (strpos(Artisan::output(), 'No pending migrations') === false) {
+                        // If there are pending migrations, remove setup completion markers
+                        if (file_exists(storage_path('app/setup_completed'))) {
+                            unlink(storage_path('app/setup_completed'));
+                        }
+                        if (file_exists(storage_path('app/setup_state.json'))) {
+                            unlink(storage_path('app/setup_state.json'));
+                        }
+                        return redirect('/setup');
+                    }
+                } catch (\Exception $e) {
+                    // If migration check fails, remove setup completion markers
+        
+                    if (file_exists(storage_path('app/setup_completed'))) {
+                        unlink(storage_path('app/setup_completed'));
+                    }
+                    if (file_exists(storage_path('app/setup_state.json'))) {
+                        unlink(storage_path('app/setup_state.json'));
+                    }
+                    return redirect('/setup');
+                }
+
                 return redirect('/');
             }
 
@@ -48,6 +100,8 @@ class SetupController extends Controller
                 ]
             ];
 
+
+                
             return Inertia::render('Setup/Index', [
                 'envInfo' => $envInfo,
                 'dbConfig' => [
