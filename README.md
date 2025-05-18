@@ -10,7 +10,6 @@ A modern, feature-rich support ticket management system built with Laravel and V
 
 ## Key Features
 
-- **Interactive Setup Wizard**: User-friendly first-time setup with database and mail configuration
 - **Responsive Design**: Modern UI that works on desktops, tablets, and mobile devices
 - **Ticket Management**: Create, view, filter, and search support tickets
 - **Status and Priority**: Track tickets by status (Open/Closed) and priority (Low/Medium/High/Critical)
@@ -32,58 +31,11 @@ A modern, feature-rich support ticket management system built with Laravel and V
 
 ## Quick Installation
 
-### Option 1: Using the Setup Wizard (Recommended)
+###  Manual Setup
 
 1. Clone the repository
    ```bash
    git clone https://github.com/siyabongaprospersithole/support-ticket-system.git
-   cd support-ticket-system
-   ```
-
-2. Install PHP dependencies
-   ```bash
-   composer install
-   ```
-
-3. Rename .env.example to .env
-   ```bash
-   # For Linux/Mac
-   cp .env.example .env
-   
-   # For Windows (Command Prompt)
-   copy .env.example .env
-   
-   # For Windows (PowerShell)
-   Copy-Item .env.example .env
-   ```
-
-4. Generate environment key
-   ```bash
-   php artisan key:generate
-   ```
-
-5. Install JavaScript dependencies
-   ```bash
-   npm install
-   ```
-
-6. Build the frontend assets
-   ```bash
-   npm run build
-   ```
-
-7. Start the server
-   ```bash
-   php artisan serve
-   ```
-
-8. Visit `http://localhost:8000` and follow the interactive setup wizard
-
-### Option 2: Manual Setup
-
-1. Clone the repository
-   ```bash
-   git clone https://github.com/username/support-ticket-system.git
    cd support-ticket-system
    ```
 
@@ -123,7 +75,7 @@ A modern, feature-rich support ticket management system built with Laravel and V
 
 6. Clear Cache and Run migrations and seed the database
    ```bash
-   php artisan migrate --seed
+   php artisan migrate & php artisan db:seed
    ```
 
 7. Build the frontend assets
@@ -210,7 +162,7 @@ php artisan test --coverage
 - **Controllers**: Handle request/response logic
   - `TicketController`: Manages ticket CRUD operations
   - `CommentController`: Handles comments on tickets
-  - `SetupController`: Manages the setup wizard
+  - `UserController`: Manages the user's activity
   - `ProfileController`: User profile management
 
 - **Models**: Database structure and relationships
@@ -232,7 +184,7 @@ php artisan test --coverage
   - `Tickets/Index`: List of tickets with filters
   - `Tickets/Show`: Detailed ticket view with comments
   - `Tickets/Create`: Ticket creation form
-  - `Setup/Index`: Setup wizard interface
+  - `Users/Index`: User tracking
 
 - **Components**: Reusable UI elements
   - Form inputs

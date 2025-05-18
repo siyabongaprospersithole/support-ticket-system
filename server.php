@@ -17,14 +17,4 @@ $uri = urldecode(
 if ($uri !== '/' && file_exists(__DIR__.'/public'.$uri)) {
     return false;
 }
-
-// Check if we should prevent environment reload
-$preventReload = file_exists(__DIR__.'/storage/app/prevent_env_reload');
-
-// If we're in the setup process, set an environment variable to tell Laravel not to reload
-if ($preventReload) {
-    $_ENV['LARAVEL_PREVENT_ENV_RELOAD'] = true;
-    putenv('LARAVEL_PREVENT_ENV_RELOAD=true');
-}
-
 require_once __DIR__.'/public/index.php'; 

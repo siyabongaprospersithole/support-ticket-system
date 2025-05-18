@@ -3,8 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\SetupController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -23,12 +23,6 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    // Redirect to setup if not completed
-    $setupStatePath = storage_path('app/setup_state.json');
-    if (!file_exists($setupStatePath)) {
-        return redirect('/setup');
-    }
-    
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -37,15 +31,6 @@ Route::get('/', function () {
     ]);
 });
 
-// Setup Routes
-Route::prefix('setup')->middleware('setup')->group(function () {
-    Route::get('/', [SetupController::class, 'index'])->name('setup.index');
-    Route::post('/test-database', [SetupController::class, 'testDatabase'])->name('setup.test-database');
-    Route::post('/save-database', [SetupController::class, 'saveDatabase'])->name('setup.save-database');
-    Route::post('/run-migrations', [SetupController::class, 'runMigrations'])->name('setup.run-migrations');
-    Route::post('/save-mail', [SetupController::class, 'saveMail'])->name('setup.save-mail');
-    Route::post('/finalize', [SetupController::class, 'finalize'])->name('setup.finalize');
-});
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -55,6 +40,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Users Routes
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
 
     // Ticket Routes
     Route::prefix('tickets')->name('tickets.')->group(function () {

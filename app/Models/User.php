@@ -44,10 +44,34 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the tickets for the user.
+     * Get the tickets created by the user.
      */
     public function tickets()
     {
         return $this->hasMany(Ticket::class);
+    }
+
+    /**
+     * Get the tickets assigned to the user.
+     */
+    public function assignedTickets()
+    {
+        return $this->hasMany(Ticket::class, 'assigned_to');
+    }
+
+    /**
+     * Get the comments made by the user.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Get the activities performed by the user.
+     */
+    public function activities()
+    {
+        return $this->hasMany(Activity::class, 'causer_id');
     }
 }
